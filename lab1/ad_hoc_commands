@@ -9,7 +9,7 @@ ansible -m ping -i itinfraservices/lab1/hosts all -u flshll
 }
 
 
-ansible -i itinfraservices/lab1/hosts all -u flshll -m shell -a 'ps -ef'
+ansible -i itinfraservices/lab1/hosts all -u flshll -m shell -a 'ps ax'
 
 127.0.0.1 | CHANGED | rc=0 >>
 UID        PID  PPID  C STIME TTY          TIME CMD
