@@ -1,0 +1,187 @@
+ansible -m ping -i itinfraservices/lab1/hosts all -u flshll 
+
+127.0.0.1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    }, 
+    "changed": false, 
+    "ping": "pong"
+}
+
+
+ansible -i itinfraservices/lab1/hosts all -u flshll -m shell -a 'ps -ef'
+
+127.0.0.1 | CHANGED | rc=0 >>
+UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  0 21:44 ?        00:00:01 /sbin/init splash
+root         2     0  0 21:44 ?        00:00:00 [kthreadd]
+root         3     2  0 21:44 ?        00:00:00 [rcu_gp]
+root         4     2  0 21:44 ?        00:00:00 [rcu_par_gp]
+root         5     2  0 21:44 ?        00:00:00 [kworker/0:0-eve]
+root         6     2  0 21:44 ?        00:00:00 [kworker/0:0H-kb]
+root         7     2  0 21:44 ?        00:00:00 [kworker/u2:0-ev]
+root         8     2  0 21:44 ?        00:00:00 [mm_percpu_wq]
+root         9     2  0 21:44 ?        00:00:00 [ksoftirqd/0]
+root        10     2  0 21:44 ?        00:00:00 [rcu_sched]
+root        11     2  0 21:44 ?        00:00:00 [migration/0]
+root        12     2  0 21:44 ?        00:00:00 [idle_inject/0]
+root        13     2  0 21:44 ?        00:00:00 [kworker/0:1-eve]
+root        14     2  0 21:44 ?        00:00:00 [cpuhp/0]
+root        15     2  0 21:44 ?        00:00:00 [kdevtmpfs]
+root        16     2  0 21:44 ?        00:00:00 [netns]
+root        17     2  0 21:44 ?        00:00:00 [rcu_tasks_kthre]
+root        18     2  0 21:44 ?        00:00:00 [kauditd]
+root        19     2  0 21:44 ?        00:00:00 [khungtaskd]
+root        20     2  0 21:44 ?        00:00:00 [oom_reaper]
+root        21     2  0 21:44 ?        00:00:00 [writeback]
+root        22     2  0 21:44 ?        00:00:00 [kcompactd0]
+root        23     2  0 21:44 ?        00:00:00 [ksmd]
+root        24     2  0 21:44 ?        00:00:00 [khugepaged]
+root        25     2  0 21:44 ?        00:00:00 [crypto]
+root        26     2  0 21:44 ?        00:00:00 [kintegrityd]
+root        27     2  0 21:44 ?        00:00:00 [kblockd]
+root        28     2  0 21:44 ?        00:00:00 [tpm_dev_wq]
+root        29     2  0 21:44 ?        00:00:00 [ata_sff]
+root        30     2  0 21:44 ?        00:00:00 [md]
+root        31     2  0 21:44 ?        00:00:00 [edac-poller]
+root        32     2  0 21:44 ?        00:00:00 [devfreq_wq]
+root        33     2  0 21:44 ?        00:00:00 [watchdogd]
+root        34     2  0 21:44 ?        00:00:00 [kworker/u2:1-ev]
+root        37     2  0 21:44 ?        00:00:00 [kswapd0]
+root        38     2  0 21:44 ?        00:00:00 [kworker/u3:0]
+root        39     2  0 21:44 ?        00:00:00 [ecryptfs-kthrea]
+root       128     2  0 21:44 ?        00:00:00 [kthrotld]
+root       129     2  0 21:44 ?        00:00:00 [acpi_thermal_pm]
+root       130     2  0 21:44 ?        00:00:00 [scsi_eh_0]
+root       131     2  0 21:44 ?        00:00:00 [scsi_tmf_0]
+root       132     2  0 21:44 ?        00:00:00 [scsi_eh_1]
+root       133     2  0 21:44 ?        00:00:00 [scsi_tmf_1]
+root       134     2  0 21:44 ?        00:00:00 [kworker/u2:2-ev]
+root       135     2  0 21:44 ?        00:00:00 [kworker/u2:3-sc]
+root       136     2  0 21:44 ?        00:00:00 [ipv6_addrconf]
+root       147     2  0 21:44 ?        00:00:00 [kstrp]
+root       166     2  0 21:44 ?        00:00:00 [charger_manager]
+root       167     2  0 21:44 ?        00:00:00 [kworker/0:1H-kb]
+root       190     2  0 21:44 ?        00:00:00 [kworker/0:2-eve]
+root       215     2  0 21:44 ?        00:00:00 [scsi_eh_2]
+root       216     2  0 21:44 ?        00:00:00 [scsi_tmf_2]
+root       217     2  0 21:44 ?        00:00:00 [kworker/0:3-ata]
+root       239     2  0 21:44 ?        00:00:00 [jbd2/sda1-8]
+root       240     2  0 21:44 ?        00:00:00 [ext4-rsv-conver]
+root       281     1  0 21:44 ?        00:00:00 /lib/systemd/systemd-journald
+root       288     1  0 21:44 ?        00:00:00 /lib/systemd/systemd-udevd
+root       308     2  0 21:44 ?        00:00:00 [loop0]
+root       310     2  0 21:44 ?        00:00:00 [loop1]
+root       313     2  0 21:44 ?        00:00:00 [loop2]
+root       316     2  0 21:44 ?        00:00:00 [loop3]
+root       319     2  0 21:44 ?        00:00:00 [loop4]
+root       322     2  0 21:44 ?        00:00:00 [loop5]
+root       326     2  0 21:44 ?        00:00:00 [loop6]
+root       328     2  0 21:44 ?        00:00:00 [loop7]
+root       332     2  0 21:44 ?        00:00:00 [loop8]
+root       335     2  0 21:44 ?        00:00:00 [loop9]
+root       345     2  0 21:44 ?        00:00:00 [loop10]
+root       347     2  0 21:44 ?        00:00:00 [loop11]
+root       349     2  0 21:44 ?        00:00:00 [loop12]
+root       351     2  0 21:44 ?        00:00:00 [loop13]
+systemd+   377     1  0 21:44 ?        00:00:00 /lib/systemd/systemd-timesyncd
+systemd+   378     1  0 21:44 ?        00:00:00 /lib/systemd/systemd-resolved
+avahi      473     1  0 21:44 ?        00:00:00 avahi-daemon: running [flshll-VM.local]
+root       474     1  0 21:44 ?        00:00:00 /usr/lib/udisks2/udisksd
+root       478     1  0 21:44 ?        00:00:00 /lib/systemd/systemd-logind
+avahi      479   473  0 21:44 ?        00:00:00 avahi-daemon: chroot helper
+root       484     1  0 21:44 ?        00:00:00 /usr/sbin/cupsd -l
+root       497     1  0 21:44 ?        00:00:00 /usr/sbin/cron -f
+root       500     1  0 21:44 ?        00:00:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+root       501     1  0 21:44 ?        00:00:00 /usr/lib/accountsservice/accounts-daemon
+syslog     504     1  0 21:44 ?        00:00:00 /usr/sbin/rsyslogd -n
+root       509     1  0 21:44 ?        00:00:00 /usr/lib/snapd/snapd
+root       515     1  0 21:44 ?        00:00:00 /usr/sbin/ModemManager --filter-policy=strict
+root       520     1  0 21:44 ?        00:00:00 /usr/sbin/acpid
+message+   523     1  0 21:44 ?        00:00:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+lp         535   484  0 21:44 ?        00:00:00 /usr/lib/cups/notifier/dbus dbus://
+root       536     1  0 21:44 ?        00:00:00 /usr/sbin/NetworkManager --no-daemon
+root       537     1  0 21:44 ?        00:00:00 /sbin/wpa_supplicant -u -s -O /run/wpa_supplicant
+lp         538   484  0 21:44 ?        00:00:00 /usr/lib/cups/notifier/dbus dbus://
+root       594     1  0 21:44 ?        00:00:00 /usr/lib/policykit-1/polkitd --no-debug
+root       595     1  0 21:44 ?        00:00:00 /usr/sbin/cups-browsed
+root       602     1  0 21:44 ?        00:00:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+root       622     1  0 21:44 ?        00:00:00 /usr/sbin/sshd -D
+root       623     1  0 21:44 ?        00:00:00 /usr/sbin/gdm3
+root       639   623  0 21:44 ?        00:00:00 gdm-session-worker [pam/gdm-autologin]
+root       646   536  0 21:44 ?        00:00:00 /sbin/dhclient -d -q -sf /usr/lib/NetworkManager/nm-dhcp-helper -pf /run/dhclient-enp0s3.pid -lf /var/lib/NetworkManager/dhclient-52125b68-ab5e-34e4-834d-d84fd8430df9-enp0s3.lease -cf /var/lib/NetworkManager/dhclient-enp0s3.conf enp0s3
+whoopsie   667     1  0 21:44 ?        00:00:00 /usr/bin/whoopsie -f
+kernoops   673     1  0 21:44 ?        00:00:00 /usr/sbin/kerneloops --test
+kernoops   682     1  0 21:44 ?        00:00:00 /usr/sbin/kerneloops
+flshll     688     1  0 21:44 ?        00:00:00 /lib/systemd/systemd --user
+flshll     693   688  0 21:44 ?        00:00:00 (sd-pam)
+flshll     738     1  0 21:44 ?        00:00:00 /usr/bin/gnome-keyring-daemon --daemonize --login
+flshll     749   639  0 21:44 tty1     00:00:00 /usr/lib/gdm3/gdm-x-session --run-script env GNOME_SHELL_SESSION_MODE=ubuntu gnome-session --session=ubuntu
+root       756   749  0 21:44 tty1     00:00:01 /usr/lib/xorg/Xorg vt1 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
+flshll     835   688  0 21:44 ?        00:00:00 /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+flshll     839   749  0 21:44 tty1     00:00:00 /usr/lib/gnome-session/gnome-session-binary --session=ubuntu
+flshll     935   839  0 21:44 ?        00:00:00 /usr/bin/ssh-agent /usr/bin/im-launch env GNOME_SHELL_SESSION_MODE=ubuntu gnome-session --session=ubuntu
+flshll     938   688  0 21:44 ?        00:00:00 /usr/lib/gvfs/gvfsd
+flshll     943   688  0 21:44 ?        00:00:00 /usr/lib/gvfs/gvfsd-fuse /run/user/1000/gvfs -f -o big_writes
+flshll     952   688  0 21:44 ?        00:00:00 /usr/lib/at-spi2-core/at-spi-bus-launcher
+flshll     957   952  0 21:44 ?        00:00:00 /usr/bin/dbus-daemon --config-file=/usr/share/defaults/at-spi2/accessibility.conf --nofork --print-address 3
+flshll     960   688  0 21:44 ?        00:00:00 /usr/lib/at-spi2-core/at-spi2-registryd --use-gnome-session
+flshll     976   839  1 21:44 tty1     00:00:04 /usr/bin/gnome-shell
+root       982     1  0 21:44 ?        00:00:00 /usr/lib/upower/upowerd
+flshll     993     1  0 21:44 ?        00:00:00 /usr/bin/pulseaudio --start --log-target=syslog
+rtkit      994     1  0 21:44 ?        00:00:00 /usr/lib/rtkit/rtkit-daemon
+flshll    1004   976  0 21:44 tty1     00:00:00 ibus-daemon --xim --panel disable
+flshll    1008  1004  0 21:44 tty1     00:00:00 /usr/lib/ibus/ibus-dconf
+flshll    1011     1  0 21:44 tty1     00:00:00 /usr/lib/ibus/ibus-x11 --kill-daemon
+flshll    1014   688  0 21:44 ?        00:00:00 /usr/lib/ibus/ibus-portal
+flshll    1017   688  0 21:44 ?        00:00:00 /usr/libexec/xdg-permission-store
+flshll    1028   688  0 21:44 ?        00:00:00 /usr/lib/gnome-shell/gnome-shell-calendar-server
+flshll    1032   688  0 21:44 ?        00:00:00 /usr/lib/evolution/evolution-source-registry
+flshll    1041   688  0 21:44 ?        00:00:00 /usr/lib/gnome-online-accounts/goa-daemon
+flshll    1050   688  0 21:44 ?        00:00:00 /usr/lib/gnome-online-accounts/goa-identity-service
+root      1060     1  0 21:44 ?        00:00:00 /usr/lib/x86_64-linux-gnu/boltd
+flshll    1062   688  0 21:44 ?        00:00:00 /usr/lib/dconf/dconf-service
+flshll    1068   688  0 21:44 ?        00:00:00 /usr/lib/gvfs/gvfs-udisks2-volume-monitor
+flshll    1072   688  0 21:44 ?        00:00:00 /usr/lib/gvfs/gvfs-afc-volume-monitor
+flshll    1077   688  0 21:44 ?        00:00:00 /usr/lib/gvfs/gvfs-mtp-volume-monitor
+flshll    1081   688  0 21:44 ?        00:00:00 /usr/lib/gvfs/gvfs-gphoto2-volume-monitor
+flshll    1085   688  0 21:44 ?        00:00:00 /usr/lib/gvfs/gvfs-goa-volume-monitor
+root      1089     1  2 21:44 ?        00:00:07 /usr/lib/packagekit/packagekitd
+flshll    1091   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-power
+flshll    1093   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-print-notifications
+flshll    1096   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-rfkill
+flshll    1098   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-screensaver-proxy
+flshll    1102   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-sharing
+flshll    1106   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-smartcard
+flshll    1108   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-sound
+flshll    1110   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-wacom
+flshll    1118   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-xsettings
+flshll    1127   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-a11y-settings
+flshll    1129   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-clipboard
+flshll    1131   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-color
+flshll    1136   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-datetime
+flshll    1138   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-housekeeping
+flshll    1140   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-keyboard
+flshll    1144   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-media-keys
+flshll    1146   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-mouse
+flshll    1162     1  0 21:44 tty1     00:00:00 /usr/lib/gnome-settings-daemon/gsd-printer
+flshll    1191   839  0 21:44 tty1     00:00:00 nautilus-desktop
+flshll    1193   839  0 21:44 tty1     00:00:00 /usr/lib/gnome-disk-utility/gsd-disk-utility-notify
+colord    1208     1  0 21:44 ?        00:00:00 /usr/lib/colord/colord
+flshll    1220   938  0 21:44 ?        00:00:00 /usr/lib/gvfs/gvfsd-trash --spawner :1.7 /org/gtk/gvfs/exec_spaw/0
+flshll    1236   688  0 21:44 ?        00:00:00 /usr/lib/evolution/evolution-calendar-factory
+flshll    1248  1236  0 21:44 ?        00:00:00 /usr/lib/evolution/evolution-calendar-factory-subprocess --factory all --bus-name org.gnome.evolution.dataserver.Subprocess.Backend.Calendarx1236x2 --own-path /org/gnome/evolution/dataserver/Subprocess/Backend/Calendar/1236/2
+flshll    1259   688  0 21:44 ?        00:00:00 /usr/lib/evolution/evolution-addressbook-factory
+flshll    1268  1259  0 21:44 ?        00:00:00 /usr/lib/evolution/evolution-addressbook-factory-subprocess --factory all --bus-name org.gnome.evolution.dataserver.Subprocess.Backend.AddressBookx1259x2 --own-path /org/gnome/evolution/dataserver/Subprocess/Backend/AddressBook/1259/2
+flshll    1281  1004  0 21:44 tty1     00:00:00 /usr/lib/ibus/ibus-engine-simple
+flshll    1450   839  1 21:45 tty1     00:00:02 /usr/bin/gnome-software --gapplication-service
+flshll    1452   839  0 21:45 tty1     00:00:00 update-notifier
+root      1473     1  0 21:45 ?        00:00:00 /usr/lib/fwupd/fwupd
+flshll    1550   839  0 21:46 tty1     00:00:00 /usr/lib/deja-dup/deja-dup-monitor
+root      1674   622  0 21:49 ?        00:00:00 sshd: flshll [priv]
+flshll    1738  1674  0 21:49 ?        00:00:00 sshd: flshll@pts/0
+flshll    1757  1738  0 21:49 pts/0    00:00:00 /bin/sh -c /usr/bin/python3 /home/flshll/.ansible/tmp/ansible-tmp-1569790130.13-157285364289899/AnsiballZ_command.py && sleep 0
+flshll    1758  1757  0 21:49 pts/0    00:00:00 /usr/bin/python3 /home/flshll/.ansible/tmp/ansible-tmp-1569790130.13-157285364289899/AnsiballZ_command.py
+flshll    1760  1758  0 21:49 pts/0    00:00:00 /bin/sh -c ps -ef
+flshll    1761  1760  0 21:49 pts/0    00:00:00 ps -ef
+
