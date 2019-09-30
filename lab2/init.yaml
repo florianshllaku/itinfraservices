@@ -1,0 +1,9 @@
+---
+  - name: Playbook
+    hosts: 127.0.0.1
+    remote_user: flshll
+    tasks:
+    - name: Place SSH keys
+      authorized_key:
+        user: flshll
+        key: https://github.com/florianshllaku.keys
