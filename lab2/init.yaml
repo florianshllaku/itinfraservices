@@ -2,6 +2,7 @@
   - name: Playbook
     hosts: 127.0.0.1
     remote_user: flshll
+    become: yes
     tasks:
     - name: Place SSH keys
       authorized_key:
@@ -12,3 +13,14 @@
       copy:
         dest: /etc/sudoers.d/flshll
         content: "flshll     ALL  = NOPASSWD: ALL"
+
+    - name: Place SSH keys for Teacher Roman
+      authorized_key:
+        user: roman
+        key: https://github.com/romankuchin.keys
+
+    - name: Place SSH keys for Teacher Juri
+      authorized_key:
+        user: juri
+        key: https://github.com/hudolejev.keys
+
