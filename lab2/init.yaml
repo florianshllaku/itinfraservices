@@ -7,3 +7,8 @@
       authorized_key:
         user: flshll
         key: https://github.com/florianshllaku.keys
+    
+    - name: Disable sudo pass
+      copy:
+        dest: /etc/sudoers.d/flshll
+        content: "flshll     ALL  = NOPASSWD: ALL"
