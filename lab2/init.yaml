@@ -24,3 +24,10 @@
         user: juri
         key: https://github.com/hudolejev.keys
 
+    - name: Show process list
+      shell: "ps ax"
+      register: show
+
+    - name: Show output of process list
+      debug:
+          var: show
