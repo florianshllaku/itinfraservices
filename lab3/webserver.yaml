@@ -1,0 +1,13 @@
+---
+- name: Playbook
+  hosts: 127.0.0.1
+  remote_user: flshll
+  become: yes
+  tasks:
+  - name: Disable sudo pass
+    copy:
+      dest: /etc/sudoers.d/flshll
+      content: "flshll     ALL  = NOPASSWD: ALL"
+
+  - name: install apache2
+    apt: name=apache2 update_cache=yes state=latest
