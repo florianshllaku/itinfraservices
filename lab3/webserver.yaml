@@ -3,6 +3,9 @@
   hosts: 127.0.0.1
   remote_user: flshll
   become: yes
+  vars:
+    port: 8080
+    domain: static
   tasks:
   - name: Disable sudo pass
     copy:
@@ -15,14 +18,39 @@
       force_apt_get: yes
 
   - name: install apache2
-    apt: name=apache2 update_cache=yes state=latest
+    apt: 
+      name=apache2
+      update_cache=yes 
+      state=latest 
 
-  - name: ensure apache2 is running
-    service:
-      name: apache2 
-      state: started 
-
-  - name: apache2 listen on port 8080
-    lineinfile: dest=/etc/apache2/ports.conf regexp="^Listen 80" line="Listen 8080" state=present
+  - name: enabled mod_rewrite
+    apache2_module: name=rewrite state=present
     notify:
       - restart apache2
+
+  - name: apache2 listen on port 8080
+    lineinfile: 
+      dest=/etc/apache2/ports.conf 
+      insertafter="Listen 80" 
+      line="Listen {{ port }}"
+      state=present
+    notify:
+      - restart apache2
+
+  - name: Create virtual host file for static content
+    template: 
+      src=virtualhost.conf 
+      dest=/etc/apache2/sites-available/{{ domain }}.conf
+    notify:
+      - restart apache2
+
+  - name: Enable virtual host
+    command: a2ensite {{ domain }}
+    notify:
+      - restart apache2
+
+  handlers:
+    - name: restart apache2
+      service:
+        name=apache2 
+        state=restarted
