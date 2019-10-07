@@ -1,0 +1,47 @@
+---
+- name: Playbook
+  hosts: 127.0.0.1
+  remote_user: flshll
+  become: yes
+  tasks:
+  - name: Disable sudo pass
+    copy:
+      dest: /etc/sudoers.d/flshll
+      content: "flshll     ALL  = NOPASSWD: ALL"
+
+  - name: "APT: Install aptitude package"
+    apt:
+      name: aptitude
+      force_apt_get: yes
+
+  - name: install apache2
+    apt: 
+      name=apache2
+      update_cache=yes 
+      state=latest 
+
+  - name: enabled mod_rewrite
+    apache2_module: name=rewrite state=present
+    notify:
+      - restart apache2
+
+  - name: apache2 listen on port 8080
+    lineinfile: 
+      dest=/etc/apache2/ports.conf 
+      insertafter="Listen 80" 
+      line="Listen 80"
+      state=present
+    notify:
+      - restart apache2
+
+  - name: apache2 virtualhost for static content
+    lineinfile:
+      dest=/etc/apache2/sites-available/000-default.conf 
+      regexp="^<VirtualHost \*:80>" 
+      line="<VirtualHost *:8080>" 
+      state=present
+    notify:
+      - restart apach
+      service: 
+        name=apache2 
+        state=restarted
