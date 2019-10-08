@@ -1,0 +1,29 @@
+---
+- name: LAMP
+  hosts: 127.0.0.1
+  remote_user: flshll
+  become: yes
+  tasks:
+  - name: Disable sudo pass
+    copy:
+      dest: /etc/sudoers.d/flshll
+      content: "flshll     ALL  = NOPASSWD: ALL"
+
+  - name: install apache2
+    apt: 
+      name=apache2
+      update_cache=yes 
+      state=latest 
+
+  - name: Install PHP for Apache2
+    apt: 
+        name=libapache2-mod-php
+        update_cache=yes 
+        state=latest
+
+  handlers:
+  - name: restart apache2
+    service:
+      name=apache2 
+      state=restarted
+
