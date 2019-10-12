@@ -4,7 +4,6 @@
   remote_user: flshll
   become: yes
   vars:
-      port: 8080
       domain: static
   tasks:
   - name: Disable sudo pass
@@ -49,12 +48,10 @@
            - php-curl
            - php-zip
            
-  - name: Create virtual host file for static content
-    template: 
-      src=virtualhost.conf 
-      dest=/etc/apache2/sites-available/{{ domain }}.conf
-    notify:
-      - restart apache2
+  - name: Create virtual host on port 80
+    copy:
+       dest: /etc/apache2/sites-available/000-default.conf
+       src: 000-default.conf
 
 
   handlers:
@@ -69,20 +66,19 @@
   remote_user: flshll
   become: yes
   tasks:
-  - name: Install MySQL 
-    apt:  name{{item}} state=present
-    with_items: 
-           - python-mysqldb
-           - python3-mysqldb
-           - mysql-server
-           - mysql-client
-           - mysql-common
+  - name: Install MYSQL Server
+    apt:
+      name: mysql-server
+      state: present
+     
+  - name: Install PyMYSQL
+    apt:
+       name: "{{ item }}"
+       state: present
+    with_items:
+    - python-pymysql
+    - python3-pymysql
   
-  - name: ensure MySQL always starts
-    service:
-      name: mysql
-      state: started
-      enabled: yes
       
 - name: Installing WordPress
   hosts: 127.0.0.1
@@ -136,21 +132,21 @@
  
   - name: Change ownership of wp-content directory
     file: path={{path}}/wp-content/ owner=www-data group=www-data mode=755 state=directory recurse=yes  
- 
- 
+    
+     
   - name: Create WordPress database
     mysql_db:
-        config_file: "/etc/mysql/my.cnf"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
         name: "{{ wp_db_name }}"
         state: present
-        login_unix_socket: /var/run/mysqld/mysqld.sock
+        
         
   - name: Create a new database user and password
     mysql_user:
-        config_file: "/etc/mysql/my.cnf"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
         name: "{{ wp_db_username }}"
         password: "{{ password }}"
         priv: '{{wp_db_name}}.*:ALL'
         state: present
-        login_unix_socket: /var/run/mysqld/mysqld.sock
+        
 
