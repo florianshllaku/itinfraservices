@@ -1,13 +1,22 @@
+acl localnets {
+	{% for ip in localnets %}
+	  {{ ip }};
+	{% endfor %}
+};
 options {
 	directory "/var/cache/bind";
 
     forwarders {
-    	1.1.1.1;
-		8.8.8.8;
-		9.9.9.10;
+    	{% for ip in forwarders%}
+			{{ ip }};
+		{% endfor %}
     };
 
 	dnssec-validation auto;
+
+	allow-query{
+		localnets;
+	};
 
 	auth-nxdomain no;    # conform to RFC1035
 	listen-on-v6 { any; };
