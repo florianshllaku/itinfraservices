@@ -23,3 +23,16 @@
     - name: dns package
       apt: 
         package: bind9
+    
+    - name: config bind
+      template: 
+        src: templates/named.conf.options.j2
+        dest: /etc/bind/named.conf.options
+      notify:
+        - restart bind
+  
+  handlers:
+    - name: restart bind
+      service: 
+        name: bind9
+        state: restarted
