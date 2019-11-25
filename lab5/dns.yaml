@@ -8,3 +8,9 @@
       template:
         src: templates/enp0s8.j2
         dest: /etc/netplan/55-enp0s8.yaml
+      notify: 
+        - netplan apply
+  
+  handlers:
+    - name: netplan apply
+      shell: netplan apply
