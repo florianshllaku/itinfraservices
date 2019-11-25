@@ -30,9 +30,26 @@
         dest: /etc/bind/named.conf.options
       notify:
         - restart bind
+
+    - name: config bind.local
+      template: 
+        src: templates/named.conf.local.j2
+        dest: /etc/bind/named.conf.local
+      notify:
+        - restart bind
+    
+    - name: config db
+      template: 
+        src: templates/db.veza.j2
+        dest: /etc/bind/db.veza
+      notify:
+        - bind reload db
   
   handlers:
     - name: restart bind
       service: 
         name: bind9
         state: restarted
+    
+    - name: bind reload db
+      shell: rndc reload
