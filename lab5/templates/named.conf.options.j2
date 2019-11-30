@@ -1,4 +1,4 @@
-acl localnets {
+acl abc {
 	{% for ip in localnets %}
 	  {{ ip }};
 	{% endfor %}
@@ -8,14 +8,14 @@ options {
 
     forwarders {
     	{% for ip in forwarders%}
-			{{ ip }};
+	{{ ip }};
 		{% endfor %}
     };
 
 	dnssec-validation auto;
 
 	allow-query{
-		localnets;
+		abc;
 	};
 
 	auth-nxdomain no;    # conform to RFC1035

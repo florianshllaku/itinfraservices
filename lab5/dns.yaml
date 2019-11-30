@@ -10,10 +10,16 @@
         dest: /etc/netplan/55-enp0s8.yaml
       notify: 
         - netplan apply
+        - systemd-resolved
   
   handlers:
     - name: netplan apply
       shell: netplan apply
+    - name: systemd-resolved
+      service:
+        name: systemd-resolved
+        state: started
+        enabled: yes
 
 - name: Setup dns
   hosts: dns
@@ -30,6 +36,7 @@
         dest: /etc/bind/named.conf.options
       notify:
         - restart bind
+        - check conf
 
     - name: config bind.local
       template: 
@@ -37,6 +44,7 @@
         dest: /etc/bind/named.conf.local
       notify:
         - restart bind
+        - check conf
     
     - name: config db
       template: 
@@ -53,3 +61,6 @@
     
     - name: bind reload db
       shell: rndc reload
+
+    - name: check conf
+      shell: named-checkconf
