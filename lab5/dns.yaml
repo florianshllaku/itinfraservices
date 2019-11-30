@@ -50,6 +50,15 @@
       template: 
         src: templates/db.veza.j2
         dest: /etc/bind/db.veza
+      when: dns_role == "master"
+      notify:
+        - bind reload db
+    
+    - name: config db ptr
+      template:
+        src: templates/db.veza.ptr.j2
+        dest: /etc/bind/db.veza.ptr
+      when: dns_role == "master"
       notify:
         - bind reload db
   

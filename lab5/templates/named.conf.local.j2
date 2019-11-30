@@ -1,4 +1,27 @@
 zone "veza.ttu" {
+{% if dns_role == "master" %}
 	type master;
 	file "/etc/bind/db.veza";
+	allow-transfer {192.168.56.103;};
+{% else %}
+	type slave;
+	file "/var/lib/bind/db.veza";
+	masters {
+		{{ master_ip }};
+	};
+{% endif %}
+};
+
+zone "56.168.192.in-addr.arpa" {
+{% if dns_role == "master" %}
+	type master;
+	file "/etc/bind/db.veza.ptr";
+  allow-transfer {192.168.56.103;};
+{% else %}
+  type slave;
+  file "/var/lib/bind/db.veza.ptr";
+  masters {
+    {{ master_ip }};
+  };
+{% endif %}
 };
