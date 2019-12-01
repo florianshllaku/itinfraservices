@@ -14,7 +14,7 @@ dns_records:
   - name: veza.ttu.
     type: NS
     address: infra02.veza.ttu.
-  - name: infra01.veza.ttu.ee
+  - name: infra01.veza.ttu.
     type: A
     address: 192.168.56.102
   - name: infra02.veza.ttu.
