@@ -45,13 +45,15 @@
       notify:
         - restart bind
         - check conf
-    
-    - name: config db
-      template: 
-        src: templates/db.veza.j2
-        dest: /etc/bind/db.veza
+
+    - name: write hash
+      copy: 
+        content: "{{ dns_records|hash }}"
+        dest: /etc/bind/db.veza.hash
       when: dns_role == "master"
-      notify:
+      notify: 
+        - gather timestamp
+        - config db
         - bind reload db
     
     - name: config db ptr
@@ -73,3 +75,12 @@
 
     - name: check conf
       shell: named-checkconf
+
+    - name: gather timestamp
+      shell: date +%s
+      register: ts
+
+    - name: config db
+      template: 
+        src: templates/db.veza.j2
+        dest: /etc/bind/db.veza
