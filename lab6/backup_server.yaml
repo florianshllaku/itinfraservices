@@ -1,0 +1,21 @@
+---
+- name: Create system user
+  hosts: infra02
+  remote_user: flshll
+  become: yes
+  tasks:
+    - name: Create Backup Groups
+      group:
+        name: backup
+        state: present
+    - name: Create a system user
+      user:
+        name: backupUser
+        password: '$6$LzzFVYIsgxacCC$ORJL6tVOtmK63XAVqtKvacEW9OS1B5UEwjfsuc4O0OdGWKdLck6X/QDp5o76dtmdUzrOHb8TD9oqVoOgTKtCo1'
+        groups:
+          - backup
+          - sudo
+        append: yes
+        state: present
+        shell: /bin/bash      
+        system: yes          
