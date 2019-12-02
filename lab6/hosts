@@ -1,0 +1,4 @@
+[master]
+infra01 ansible_host=192.168.56.102
+[slave]
+infra02 ansible_host=192.168.56.103
