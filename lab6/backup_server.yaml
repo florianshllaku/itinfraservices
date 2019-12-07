@@ -25,3 +25,16 @@
         user: backupUser
         state: present
         key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}" 
+    
+    - name: Create Directory /srv/backup
+      file:
+        path: /srv/backup/{{ item }}
+        owner: backup
+        group: backup
+        state: directory
+        mode: 0775
+        recurse: yes
+      with_items:
+      - wp
+      - dns
+      - db-server
