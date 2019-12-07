@@ -1,7 +1,6 @@
 ---
 - name: Create system user
   hosts: infra01
-  remote_user: flshll
   become: yes
   tasks:
     - name: Create Backup Groups
@@ -18,7 +17,36 @@
         append: yes
         state: present
         shell: /bin/bash      
-        system: yes          
+        system: yes  
+    
+    - name: Sudo without password
+      copy:
+        dest: /etc/sudoers.d/flshll
+        content: "flshll     ALL  = NOPASSWD: ALL"  
+
+    - name: Initialize SSH connection from host to VM1
+      authorized_key:
+        user: backupUser
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"  
+
+    - name: Upload Private Key
+      copy:
+        src: ~/.ssh/id_rsa
+        dest: ~/.ssh/id_rsa
+        mode: 0600   
+      become_method: "sudo"
+      become_flags: "su - -c"
+      become_user: backupUser
+
+    - name: Upload Public Key to VM1
+      copy:
+        src: ~/.ssh/id_rsa.pub
+        dest: ~/.ssh/id_rsa.pub
+      become_method: "sudo"
+      become_flags: "su - -c"
+      become_user: backupUser
+
 
     
      

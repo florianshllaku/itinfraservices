@@ -10,7 +10,7 @@
         state: present
     - name: Create a system user
       user:
-        name: backupUser
+        name: backupServer
         password: '$6$LzzFVYIsgxacCC$ORJL6tVOtmK63XAVqtKvacEW9OS1B5UEwjfsuc4O0OdGWKdLck6X/QDp5o76dtmdUzrOHb8TD9oqVoOgTKtCo1'
         groups:
           - backup
@@ -19,3 +19,9 @@
         state: present
         shell: /bin/bash      
         system: yes          
+
+    - name: Initialize SSH connection from host to VM1
+      authorized_key:
+        user: backupUser
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}" 
