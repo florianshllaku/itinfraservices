@@ -1,0 +1,27 @@
+---
+- name: Init for Infra01
+  hosts: infra01
+  become: yes
+  tasks:
+  - name: Sudo without password
+    copy:
+      dest: /etc/sudoers.d/flshll
+      content: "flshll     ALL = NOPASSWD: ALL"  
+  - name: Initialize SSH connection
+    authorized_key:
+      user: flshll
+      state: present
+      key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+- name: Init for infra02
+  hosts: infra02
+  become: yes
+  tasks:
+  - name: Sudo without password
+    copy:
+      dest: /etc/sudoers.d/flshll
+      content: "flshll     ALL = NOPASSWD: ALL"  
+  - name: Initialize SSH connection
+    authorized_key:
+      user: flshll
+      state: present
+      key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
