@@ -52,13 +52,15 @@
     copy:
        dest: /etc/apache2/sites-available/000-default.conf
        src: 000-default.conf
+    notify: restart apache2
+
 
 
   handlers:
   - name: restart apache2
     service:
-      name=apache2 
-      state=restarted
+      name: apache2 
+      state: restarted
 
 
 - name: Installing MySQL
