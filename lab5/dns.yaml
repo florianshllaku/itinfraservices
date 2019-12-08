@@ -1,6 +1,6 @@
 ---
 - name: Initial setup
-  hosts: all
+  hosts: dnsLegacy
   remote_user: flshll
   become: yes
   tasks:
@@ -11,6 +11,7 @@
       notify: 
         - netplan apply
         - systemd-resolved
+        - hash
   
   handlers:
     - name: netplan apply
@@ -20,6 +21,8 @@
         name: systemd-resolved
         state: started
         enabled: yes
+    - name: hash
+      shell: hash -r
 
 - name: Setup dns
   hosts: dns
@@ -64,6 +67,10 @@
       notify:
         - bind reload db
   
+    - name: resolv.conf fix
+      template:
+        src: resolv.conf.j2
+        dest: /etc/resolv.conf
   handlers:
     - name: restart bind
       service: 
