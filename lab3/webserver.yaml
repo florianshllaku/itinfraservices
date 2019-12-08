@@ -3,9 +3,6 @@
   hosts: 127.0.0.1
   remote_user: flshll
   become: yes
-  vars:
-    port: 8080
-    domain: static
   tasks:
   - name: Disable sudo pass
     copy:
@@ -19,15 +16,15 @@
 
   - name: install apache2
     apt: 
-      name=apache2
-      update_cache=yes 
-      state=latest 
+      name: apache2
+      update_cache: yes 
+      state: latest 
 
   - name: Install PHP for Apache2
     apt: 
-        name=libapache2-mod-php
-        update_cache=yes 
-        state=latest
+        name: libapache2-mod-php
+        update_cache: yes 
+        state: latest
 
   - name: apache2 listen on port 8080
     copy:
@@ -38,18 +35,19 @@
 
   - name: Create virtual host file for static content
     copy: 
-      src=virtualhost.conf 
-      dest=/etc/apache2/sites-available/{{ domain }}.conf
+      src: virtualhost.conf 
+      dest: /etc/apache2/sites-enabled/virtualhost.conf
     notify:
       - restart apache2
 
-  - name: Enable virtual host
-    command: a2ensite {{ domain }}
-    notify:
-      - restart apache2
+  
+  - name: Put PHP Index.php file
+    copy:
+      src: index.php
+      dest: /var/www/php/
 
   handlers:
     - name: restart apache2
       service:
-        name=apache2 
-        state=restarted
+        name: apache2 
+        state: restarted
