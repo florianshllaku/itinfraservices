@@ -30,16 +30,14 @@
         state=latest
 
   - name: apache2 listen on port 8080
-    lineinfile: 
-      dest=/etc/apache2/ports.conf 
-      insertafter="Listen 80" 
-      line="Listen {{ port }}"
-      state=present
+    copy:
+      src: ports.conf
+      dest: /etc/apache2/ports.conf
     notify:
       - restart apache2
 
   - name: Create virtual host file for static content
-    template: 
+    copy: 
       src=virtualhost.conf 
       dest=/etc/apache2/sites-available/{{ domain }}.conf
     notify:

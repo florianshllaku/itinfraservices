@@ -14,6 +14,23 @@
         dest: /etc/sudoers.d/flshll
         content: "flshll     ALL  = NOPASSWD: ALL"
 
+    - name: Add sysadmins
+      group:
+        name: sysadmins
+        state: present
+
+    - name: Add teacher Roman Kuchin   
+      user:
+        name: roman
+        groups: sysadmins
+        append: yes
+
+    - name: Add Teacher Juri Hudolejev
+      user:
+        name: juri
+        groups: sysadmins
+        append: yes 
+
     - name: Place SSH keys for Teacher Roman
       authorized_key:
         user: roman

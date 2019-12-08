@@ -1,0 +1,86 @@
+---
+- name: Initial setup
+  hosts: all
+  remote_user: flshll
+  become: yes
+  tasks:
+    - name: Setup Interface
+      template:
+        src: templates/enp0s8.j2
+        dest: /etc/netplan/55-enp0s8.yaml
+      notify: 
+        - netplan apply
+        - systemd-resolved
+  
+  handlers:
+    - name: netplan apply
+      shell: netplan apply
+    - name: systemd-resolved
+      service:
+        name: systemd-resolved
+        state: started
+        enabled: yes
+
+- name: Setup dns
+  hosts: dns
+  remote_user: flshll
+  become: yes
+  tasks: 
+    - name: dns package
+      apt: 
+        package: bind9
+    
+    - name: config bind
+      template: 
+        src: templates/named.conf.options.j2
+        dest: /etc/bind/named.conf.options
+      notify:
+        - restart bind
+        - check conf
+
+    - name: config bind.local
+      template: 
+        src: templates/named.conf.local.j2
+        dest: /etc/bind/named.conf.local
+      notify:
+        - restart bind
+        - check conf
+
+    - name: write hash
+      copy: 
+        content: "{{ dns_records|hash }}"
+        dest: /etc/bind/db.veza.hash
+      when: dns_role == "master"
+      notify: 
+        - gather timestamp
+        - config db
+        - bind reload db
+    
+    - name: config db ptr
+      template:
+        src: templates/db.veza.ptr.j2
+        dest: /etc/bind/db.veza.ptr
+      when: dns_role == "master"
+      notify:
+        - bind reload db
+  
+  handlers:
+    - name: restart bind
+      service: 
+        name: bind9
+        state: restarted
+    
+    - name: bind reload db
+      shell: rndc reload
+
+    - name: check conf
+      shell: named-checkconf
+
+    - name: gather timestamp
+      shell: date +%s
+      register: ts
+
+    - name: config db
+      template: 
+        src: templates/db.veza.j2
+        dest: /etc/bind/db.veza

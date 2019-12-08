@@ -1,0 +1,152 @@
+---
+- name: Apache2 and PHP installation
+  hosts: 127.0.0.1
+  remote_user: flshll
+  become: yes
+  vars:
+      domain: static
+  tasks:
+  - name: Disable sudo pass
+    copy:
+      dest: /etc/sudoers.d/flshll
+      content: "flshll     ALL  = NOPASSWD: ALL"
+
+  - name: install apache2
+    apt: 
+      name=apache2
+      update_cache=yes 
+      state=latest 
+  
+  - name: Enable mod rewrite
+    apache2_module:
+       state: present
+       name: rewrite
+  
+  - name: enable the use of .htaccess files in any projects
+    copy:
+      src: enable_htaccess.conf
+      dest: /etc/apache2/sites-available/enable_htaccess.conf
+ 
+  - name: enable the .htaccess vhost
+    file:
+      src: /etc/apache2/sites-available/enable_htaccess.conf
+      dest: /etc/apache2/sites-enabled/enable_htaccess.conf
+      state: link
+
+  - name: Install PHP for Apache2
+    apt: name={{item}} state=present
+    with_items:
+           - php
+           - php-mysql
+           - php-common
+           - php-mysql
+           - php-tidy
+           - php-xml
+           - php-xmlrpc
+           - php-mbstring
+           - php-memcached
+           - php-curl
+           - php-zip
+           
+  - name: Create virtual host on port 80
+    copy:
+       dest: /etc/apache2/sites-available/000-default.conf
+       src: 000-default.conf
+
+
+  handlers:
+  - name: restart apache2
+    service:
+      name=apache2 
+      state=restarted
+
+
+- name: Installing MySQL
+  hosts: 127.0.0.1
+  remote_user: flshll
+  become: yes
+  tasks:
+  - name: Install MYSQL Server
+    apt:
+      name: mysql-server
+      state: present
+     
+  - name: Install PyMYSQL
+    apt:
+       name: "{{ item }}"
+       state: present
+    with_items:
+    - python-pymysql
+    - python3-pymysql
+  
+      
+- name: Installing WordPress
+  hosts: 127.0.0.1
+  remote_user: flshll
+  become: yes
+  vars:
+      password:   !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          65333537383731386137643533663036363532393964643232633262303934323934666435356562
+          3264353137376630336336326234653230616432393963650a356663386632303163343537366131
+          64383731303530383761346332363765333133326335323334336139386166613037613265353865
+          3030626539323233350a343261313837633165303334366238393362623839316661316662346138
+          6135
+      wp_db_name: florian
+      wp_db_username: flshll
+      wp_install_path: /var/www
+      wp_directory_name: wordpress
+  tasks:
+  - name: Concantenate the install and directory into a single variable
+    set_fact:
+        path: "{{ wp_install_path }}/{{ wp_directory_name}}"
+ 
+  - name: Only install WordPress when there is no index.php in the path
+    stat:
+       path: "{{path}}/index.php"
+    register: stat_result
+ 
+  - name: Ensure that installation directory exists
+    file: path={{path}} state=directory
+ 
+  - name: Download Latest Version to /tmp
+    get_url: url=https://wordpress.org/latest.tar.gz force=no dest=/tmp/wordpress.tar.gz
+ 
+  - name: Extract archive
+    unarchive: src=/tmp/wordpress.tar.gz dest=/tmp copy=no
+ 
+ 
+  - name: Move extracted directory to {{path}}
+    shell: cp -r -n /tmp/wordpress/* {{path}}
+ 
+ 
+  - name: Remove wordpress.tar.gz
+    file: path=/tmp/wordpress.tar.gz state=absent
+ 
+ 
+  - name: Copy WordPress config file
+    template: src=wp-config.php dest={{path}}
+ 
+  - name: Change ownership of installation directory
+    file: path={{path}} owner=www-data group=www-data  state=directory recurse=yes setype=httpd_sys_content_t
+ 
+  - name: Change ownership of wp-content directory
+    file: path={{path}}/wp-content/ owner=www-data group=www-data mode=755 state=directory recurse=yes  
+    
+     
+  - name: Create WordPress database
+    mysql_db:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: "{{ wp_db_name }}"
+        state: present
+        
+        
+  - name: Create a new database user and password
+    mysql_user:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: "{{ wp_db_username }}"
+        password: "{{ password }}"
+        priv: '{{wp_db_name}}.*:ALL'
+        state: present
+        
+
