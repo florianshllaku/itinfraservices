@@ -1,0 +1,7 @@
+---
+- name: node_exporter
+  hosts: linux
+  remote_user: flshll
+  become: yes
+  roles:
+    - node_exporter
