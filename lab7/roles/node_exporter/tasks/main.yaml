@@ -16,3 +16,13 @@
     remote_src: yes
     extra_opts: 
       - --strip-components=1
+
+- name: systerd node_exporter
+  template: 
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+
+- name: start exporter
+  service: 
+    name: node_exporter
+    state: started
