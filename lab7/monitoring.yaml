@@ -5,3 +5,10 @@
   become: yes
   roles:
     - node_exporter
+
+- name: prometheus
+  hosts: prometheus
+  remote_user: flshll
+  become: yes
+  roles:
+    - prometheus

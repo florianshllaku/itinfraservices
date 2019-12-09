@@ -1,0 +1,10 @@
+
+[Unit]
+Description=Prometheus
+
+[Service]
+User=root
+ExecStart=/opt/prometheus/prometheus
+
+[Install]
+WantedBy=multi-user.target
