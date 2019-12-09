@@ -1,0 +1,37 @@
+---
+prometheus_version: 2.14.0
+jobs:
+  - name: prometheus
+    port: 9090
+    targets:
+      - localhost
+
+  - name: ping
+    port: 9105
+    targets:
+      - infra01.veza.ttu
+      - infra02.veza.ttu
+
+  - name: linux
+    port: 9100
+    targets:
+      - infra01.veza.ttu
+      - infra02.veza.ttu
+      
+  - name: bind
+    port: 9119
+    targets:
+      - infra01.veza.ttu
+      - infra02.veza.ttu
+
+  - name: apache
+    port: 9117
+    targets:
+      - infra01.veza.ttu
+      - infra02.veza.ttu
+
+  - name: sql
+    port: 9399
+    targets:
+      - infra01.veza.ttu
+      - infra02.veza.ttu
