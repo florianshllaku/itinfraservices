@@ -6,6 +6,7 @@
   roles:
     - node_exporter
     - bind
+    - mysql
 
 - name: prometheus
   hosts: prometheus
