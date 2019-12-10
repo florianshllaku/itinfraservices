@@ -5,6 +5,7 @@
   notify:
     - netplan apply
 
+    
 - name: setup syslog
   template:
     src: 51-telegraf.conf
