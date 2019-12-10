@@ -1,0 +1,7 @@
+ 
+---
+- name: Init 
+  become: yes
+  hosts: all
+  roles:
+    - init
