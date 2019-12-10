@@ -4,5 +4,4 @@
     dest: /etc/netplan/55-enp0s8.yaml
   notify:
     - netplan apply
-    - systemd-resolved
     - dpkg

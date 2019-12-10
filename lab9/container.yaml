@@ -11,3 +11,10 @@
   hosts: all
   roles:
     - bind
+
+- name: docker
+  become: yes
+  hosts: infra01
+  roles:
+    - wordpress
+    - grafana
