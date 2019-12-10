@@ -10,5 +10,3 @@ $TTL	604800
 {% for i in dns_records %}
 {{ i.name }} IN {{ i.type }} {{ i.address }}
 {% endfor %}
-
-

@@ -57,6 +57,7 @@
       notify: 
         - gather timestamp
         - config db
+        - restart bind
         - bind reload db
     
     - name: config db ptr

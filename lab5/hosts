@@ -3,8 +3,5 @@ infra01 ansible_host=192.168.56.102
 infra02 ansible_host=192.168.56.103
 
 [dnsLegacy]
-infra01 ansible_host=127.0.0.1 ansible_ssh_port=2222
-infra02 ansible_host=127.0.0.1 ansible_ssh_port=2223
-
-
-
+infra01 ansible_host=127.0.0.1 ansible_ssh_port=2222 ansible_ssh_user=flshll
+infra02 ansible_host=127.0.0.1 ansible_ssh_port=2223 ansible_ssh_user=flshll

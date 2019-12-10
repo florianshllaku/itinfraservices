@@ -1,37 +1,34 @@
 ---
-prometheus_version: 2.14.0
+prometheus_db_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          65656163656466633931336266663134656163343666333262623136343965623633393233626366
+          3564666230323365323834393365653766643465646265370a613634626639393838316165356136
+          64333235353533386132343664306232373337316433323139316666653730356431303336666239
+          6264656537303530630a303233316163316161313366356131613665343237333137343032363535
+          6437
+prometheus_version: "2.14.0"
 jobs:
   - name: prometheus
     port: 9090
     targets:
       - localhost
-
-  - name: ping
-    port: 9105
-    targets:
-      - infra01.veza.ttu
-      - infra02.veza.ttu
-
   - name: linux
     port: 9100
     targets:
       - infra01.veza.ttu
       - infra02.veza.ttu
-      
   - name: bind
     port: 9119
     targets:
       - infra01.veza.ttu
       - infra02.veza.ttu
-
   - name: apache
     port: 9117
     targets:
       - infra01.veza.ttu
       - infra02.veza.ttu
-
-  - name: sql
-    port: 9399
+  - name: MySQL
+    port: 9104
     targets:
       - infra01.veza.ttu
       - infra02.veza.ttu

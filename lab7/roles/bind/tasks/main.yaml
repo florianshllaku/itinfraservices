@@ -1,8 +1,9 @@
-- name: dns package
-  apt:
-    package: bind9
+- name: Install bind9
+  apt: 
+    name=bind9 
+    state=latest
 
-- name: config bind
+- name: configure bind
   template:
     src: templates/named.conf.options.j2
     dest: /etc/bind/named.conf.options
@@ -10,14 +11,14 @@
     - restart bind
     - check conf
 
-- name: config bind.local
+- name: configure bind.local
   template:
     src: templates/named.conf.local.j2
     dest: /etc/bind/named.conf.local
   notify:
-    - check conf
     - restart bind
-    
+    - check conf
+
 - name: check zone hash
   copy:
     content: "{{ records|hash }}"
@@ -40,8 +41,8 @@
 
 - name: download go
   get_url:
-    url: https://dl.google.com/go/go{{go_version}}.linux-amd64.tar.gz
-    dest: /opt/go{{go_version}}.linux-amd64.tar.gz
+    url: https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz
+    dest: /opt/go1.13.3.linux-amd64.tar.gz
 
 - name: folder
   file:
@@ -49,9 +50,9 @@
     state: directory
     mode: '0755'
 
-- name: unTAR
+- name: untar
   unarchive:
-    src: /opt/go{{go_version}}.linux-amd64.tar.gz
+    src: /opt/go1.13.3.linux-amd64.tar.gz
     dest: /opt/go
     remote_src: yes
 
@@ -81,7 +82,6 @@
   template:
     src: bind_exporter.service.j2
     dest: /etc/systemd/system/bind_exporter.service
-    
 
 - name: start bind_exporter
   service:
