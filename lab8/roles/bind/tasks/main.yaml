@@ -19,14 +19,16 @@
     - restart bind
     - check conf
 
-- name: check zone hash
-  copy:
-    content: "{{ records|hash }}"
-    dest: /etc/bind/db.veza.hash
+- name: get timestamp
+  shell: "date +%s"
+  register: timestamp
+
+- name: upload bind zone
+  template:
+    src: templates/db.veza.j2
+    dest: /etc/bind/db.veza
   when: dns_role == "master"
   notify:
-    - get timestamp
-    - upload bind zone
     - restart bind
     - bind reload db
 
