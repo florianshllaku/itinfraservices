@@ -5,3 +5,9 @@
   hosts: all
   roles:
     - init
+
+- name: Bind
+  become: yes
+  hosts: all
+  roles:
+    - bind

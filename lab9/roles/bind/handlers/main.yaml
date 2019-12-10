@@ -1,0 +1,14 @@
+- name: check conf
+  shell: named-checkconf
+
+- name: restart bind
+  service:
+    name: bind9
+    state: restarted
+
+- name: bind reload db
+  shell: rndc reload
+
+- name: dpkg
+  shell: dpkg --configure -a
+
