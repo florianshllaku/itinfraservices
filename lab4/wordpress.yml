@@ -141,7 +141,7 @@
         login_unix_socket: /var/run/mysqld/mysqld.sock
         name: "{{ wp_db_name }}"
         state: present
-        
+        login_user: root
         
   - name: Create a new database user and password
     mysql_user:
@@ -149,6 +149,8 @@
         name: "{{ wp_db_username }}"
         password: "{{ password }}"
         priv: '{{wp_db_name}}.*:ALL'
+        login_user: root
         state: present
+
         
 
