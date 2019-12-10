@@ -4,3 +4,9 @@
   hosts: nat
   roles:
     - init
+
+- name: influxdb
+  become: yes
+  hosts: infra02
+  roles:
+    - influxdb
