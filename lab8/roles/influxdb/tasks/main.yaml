@@ -1,3 +1,10 @@
 - name: install
-  apt: 
-    package: ['influxdb', 'influxdb-client']
+  apt:
+    package: ['influxdb', 'influxdb-client', 'python-pip']
+
+- pip:
+    name: ['requests', 'influxdb']
+
+- name: Create database
+  influxdb_database:
+      database_name: "rtt"
