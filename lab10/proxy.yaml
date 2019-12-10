@@ -1,0 +1,8 @@
+
+---
+- name: All
+  become: yes
+  hosts: all
+  roles:
+    - init
+    - bind

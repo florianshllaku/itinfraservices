@@ -23,5 +23,5 @@
   become: yes
   hosts: infra02
   roles:
-    - mysql
+    - sql_exporter
     - prometheus
