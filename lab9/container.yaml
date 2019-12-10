@@ -18,3 +18,10 @@
   roles:
     - wordpress
     - grafana
+
+- name: Mysql and Prometheus
+  become: yes
+  hosts: infra02
+  roles:
+    - mysql
+    - prometheus
