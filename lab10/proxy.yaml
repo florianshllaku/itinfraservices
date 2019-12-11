@@ -13,3 +13,9 @@
   roles:
     - haproxy
     - wordpress
+
+- name: VM2
+  become: yes
+  hosts: infra02
+  roles:
+    - mysql
