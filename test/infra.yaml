@@ -1,0 +1,33 @@
+---
+- name: All
+  become: yes
+  hosts: all
+  roles:
+    - init
+    - bind
+
+- name: VM1
+  become: yes
+  hosts: infra01
+  roles:
+    - haproxy
+    - wordpress
+
+- name: exporters
+  hosts: all
+  become: yes
+  roles:
+    - node_exporter
+    - sql_exporter
+    - mysql
+
+- name: VM2
+  become: yes
+  hosts: infra02
+  roles:
+    - mysql
+    - influxdb
+    - prometheus   
+    - grafana
+ 
+
