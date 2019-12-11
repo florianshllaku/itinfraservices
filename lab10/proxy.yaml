@@ -12,3 +12,4 @@
   hosts: infra01
   roles:
     - haproxy
+    - wordpress
