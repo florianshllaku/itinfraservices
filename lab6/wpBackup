@@ -1,2 +1,4 @@
-22 0 * * 1-6  backup   duplicity --no-encryption incremental ~/dump rsync://192.168.56.103//srv/backup/db-server/
-20 0 * * 0 backup sudo duplicity delete-older-than 30d rsync://backup@192.168.56.103//srv/backup/wpbackup/db-server/
+18 0 * * 0 backup duplicity --no-encryption full /usr/share/wordpress/ rsync://backupUser@192.168.56.103//srv/backup/wp/
+22 0 * * 1-6 backup duplicity --no-encryption incremental /usr/share/wordpress/ rsync://backupUser@192.168.56.103//srv/backup/wp/
+20 0 * * 0 backup sudo duplicity delete-older-than 30d rsync://backupUser@192.168.56.103//srv/backup/wpbackup/db-server/
+22 0 * * 1-6  backup   duplicity --no-encryption incremental ~/dump rsync://backupUser@192.168.56.103//srv/backup/db-server/
