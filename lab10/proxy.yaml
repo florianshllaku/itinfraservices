@@ -6,3 +6,9 @@
   roles:
     - init
     - bind
+
+- name: VM1
+  become: yes
+  hosts: infra01
+  roles:
+    - haproxy
