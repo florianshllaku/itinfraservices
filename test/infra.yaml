@@ -18,16 +18,17 @@
   become: yes
   roles:
     - node_exporter
-    - sql_exporter
-    - mysql
+    - bind_exporter
+  
 
 - name: VM2
   become: yes
   hosts: infra02
   roles:
     - mysql
-    - influxdb
+    - mysql_exporter
     - prometheus   
     - grafana
+    - influxdb
  
 

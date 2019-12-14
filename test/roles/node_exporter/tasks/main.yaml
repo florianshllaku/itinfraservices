@@ -1,3 +1,8 @@
+- name: Create node_exporter nologin user
+  user: 
+    name: node_exporter
+    shell: /sbin/nologin
+
 - name: Check that the file exists
   stat:
     path: /opt/node_exporter-0.18.1.linux-amd64.tar.gz

@@ -12,23 +12,17 @@ jobs:
     port: 9090
     targets:
       - localhost
-  - name: linux
-    port: 9100
-    targets:
-      - infra01.veza.ttu
-      - infra02.veza.ttu
   - name: bind
     port: 9119
     targets:
-      - infra01.veza.ttu
-      - infra02.veza.ttu
-  - name: apache
-    port: 9117
-    targets:
-      - infra01.veza.ttu
-      - infra02.veza.ttu
+      - infra01.veza.red
+      - infra02.veza.red
   - name: MySQL
     port: 9104
     targets:
-      - infra01.veza.ttu
-      - infra02.veza.ttu
+      - infra02.veza.red  
+  - name: node_exporter
+    port: 9100
+    targets:
+      - infra01.veza.red
+      - infra02.veza.red

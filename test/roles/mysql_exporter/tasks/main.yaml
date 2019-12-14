@@ -6,6 +6,10 @@
   stat:
     path: /opt/sqld_exporter-{{mysqld_exporter_version}}.linux-amd64.tar.gz
   register: stat_result
+- name: Check that the file exists
+  stat:
+    path: /opt/mysqld_exporter-{{mysqld_exporter_version}}.linux-amd64.tar.gz
+  register: stat_result
 
 - name: Download
   get_url:

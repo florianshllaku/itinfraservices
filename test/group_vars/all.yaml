@@ -1,2 +1,4 @@
 ---
   ansible_python_interpreter: /usr/bin/python3
+  db_name: "wp"
+  db_user: "wp_user"

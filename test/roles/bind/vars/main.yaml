@@ -7,21 +7,20 @@ localnets:
   - 192.168.56.0/24
   - 10.0.2.0/24
   - localhost
-  - 172.17.0.0/16 #This is for Docker Containers to be able to use ours dns servers
 records:
   - type: NS
     entries:
-      - name: veza.ttu.
-        address: infra01.veza.ttu.
-      - name: veza.ttu.
-        address: infra02.veza.ttu.
+      - name: veza.red.
+        address: infra01.veza.red.
+      - name: veza.red.
+        address: infra02.veza.red.
   - type: A
     entries:
-      - name: infra01.veza.ttu.
+      - name: infra01.veza.red.
         address: 192.168.56.102
-      - name: infra02.veza.ttu.
+      - name: infra02.veza.red.
         address: 192.168.56.103
-      - name: infra.veza.ttu.
+      - name: infra.veza.red.
         addresses:
           - 192.168.56.102
           - 192.168.56.103
@@ -33,12 +32,12 @@ records:
         address: infra01
       - name: ns2
         address: infra02
-      - name: web
-        address: infra02
+      - name: www
+        address: infra01
       - name: grafana
-        address: infra01
+        address: infra02
       - name: prometheus
-        address: infra01
+        address: infra02
       - name: influxdb
         address: infra02
       - name: db

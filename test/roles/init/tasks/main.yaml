@@ -1,21 +1,18 @@
-- name: Disable sudo pass
-  copy:
-    dest: /etc/sudoers.d/flshll
-    content: "flshll     ALL  = NOPASSWD: ALL"
-
 - name: setup network
   template:
     src: enp0s8.j2
     dest: /etc/netplan/55-enp0s8.yaml
   notify:
     - netplan apply
-    - dpkg
 
-    
-- name: setup syslog
-  template:
-    src: 51-telegraf.conf
-    dest: /etc/rsyslog.d/51-telegraf.conf
-  notify:
-    - restart rsyslog
+- name: Sudo without password
+  copy:
+    dest: /etc/sudoers.d/flshll
+    content: "flshll     ALL = NOPASSWD: ALL"  
+
+- name: Initialize SSH connection
+  authorized_key:
+    user: flshll
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 

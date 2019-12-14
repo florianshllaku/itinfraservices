@@ -1,11 +1,8 @@
-- name: Create database user for prometheus
-  mysql_user:
-    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Create node_exporter nologin user
+  user: 
     name: prometheus
-    password: "{{ prometheus_db_password }}"
-    priv: '*.*:ALL,GRANT'
-    state: present
-    login_user: root
+    shell: /sbin/nologin
 
 - name: Download
   get_url:
@@ -38,8 +35,7 @@
     dest: /opt/prometheus/prometheus.yml
   notify:
     - restart prometheus
-  tags:
-    - p
+
 
 - name: systemd prometheus
   template:

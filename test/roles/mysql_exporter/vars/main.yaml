@@ -1,5 +1,4 @@
 ---
-prometheus_mysql_user: wp_user
 prometheus_mysql_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           65646433343566396166303034663931336263636163373838353032343261646462623765383662

@@ -1,6 +1,6 @@
 ---
 mysql_db_name: wp
-mysql_db_user: wp_user
+mysql_db_user: wpuser
 mysql_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           66633930353433343438643632386333343032323931326364666665656533653063623034323239

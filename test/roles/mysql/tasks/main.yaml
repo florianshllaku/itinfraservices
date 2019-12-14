@@ -1,6 +1,7 @@
 - name: Install MYSQL Server
   apt:
     name: mysql-server
+    update_cache: yes
     state: present
 - name: Install PyMYSQL
   apt:
@@ -10,6 +11,7 @@
   with_items:
   - python-pymysql
   - python3-pymysql
+  - python-mysqldb
 - name: Start Mysql Service
   service: 
     name: mysql 
@@ -17,14 +19,23 @@
     enabled: true
 - name: create a new database with its name
   mysql_db:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
     name: "{{ wp_mysql_db }}"
     state: present
-    login_unix_socket: /var/run/mysqld/mysqld.sock
 - name: create db user 
   mysql_user:
     name: "{{ wp_mysql_user }}"
     password: "{{ wp_mysql_password }}"
     host: "{{ mysql_host }}"
+    login_host: "{{ mysql_login_host }}"
+    priv: '{{wp_mysql_db}}.*.*:ALL'
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  
+- name: Create user 
+  mysql_user:
+    name: "prometheus"
+    password: "{{ wp_mysql_password }}"
     priv: '*.*:ALL'
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock
