@@ -2,3 +2,8 @@
   service: 
     name: mysql 
     state: restarted 
+
+- name: restart sql_exporter
+  service: 
+    name: sqld_exporter
+    state: restarted
