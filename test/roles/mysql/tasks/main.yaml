@@ -12,6 +12,7 @@
   - python-pymysql
   - python3-pymysql
   - python-mysqldb
+  
 - name: Start Mysql Service
   service: 
     name: mysql 
@@ -20,22 +21,23 @@
 - name: create a new database with its name
   mysql_db:
     login_unix_socket: /var/run/mysqld/mysqld.sock
-    name: "{{ wp_mysql_db }}"
+    name: "{{ db_name }}"
     state: present
+
 - name: create db user 
   mysql_user:
-    name: "{{ wp_mysql_user }}"
-    password: "{{ wp_mysql_password }}"
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
     host: "{{ mysql_host }}"
     login_host: "{{ mysql_login_host }}"
-    priv: '{{wp_mysql_db}}.*.*:ALL'
+    priv: '{{ db_name }}.*:ALL'
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock
   
 - name: Create user 
   mysql_user:
     name: "prometheus"
-    password: "{{ wp_mysql_password }}"
+    password: "{{ prometheus_db_password }}"
     priv: '*.*:ALL'
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock

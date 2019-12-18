@@ -18,11 +18,12 @@
       detach: True
       published_ports:
       - 8{{ item }}80:80
+      restart_policy: always
       env: 
-         WORDPRESS_DB_USER={{ mysql_db_user }},
+         WORDPRESS_DB_USER={{ db_user }},
          WORDPRESS_DB_HOST=db.veza.red:3306,
-         WORDPRESS_DB_PASSWORD={{ mysql_password }},
-         WORDPRESS_DB_NAME={{ mysql_db_name }}
+         WORDPRESS_DB_PASSWORD={{ db_password }},
+         WORDPRESS_DB_NAME={{ db_name }}
       dns_servers:
         - 192.168.56.102
         - 192.168.56.103

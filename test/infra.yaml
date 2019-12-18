@@ -12,6 +12,7 @@
   roles:
     - haproxy
     - wordpress
+  tags: hw
 
 - name: exporters
   hosts: all
@@ -30,5 +31,6 @@
     - prometheus   
     - grafana
     - influxdb
+  tags: mmpgi
  
 

@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 User=mysql_exporter
-Environment="DATA_SOURCE_NAME=prometheus:{{ prometheus_mysql_password }}@tcp(127.0.0.1:3306)/"
+Environment="DATA_SOURCE_NAME=prometheus:{{ prometheus_db_password }}@tcp(127.0.0.1:3306)/"
 Type=simple
 ExecStart=/opt/sqld_exporter/mysqld_exporter
 
