@@ -3,7 +3,3 @@
     name: mysql 
     state: restarted 
 
-- name: restart sqld_exporter
-  service: 
-    name: sqld_exporter
-    state: restarted

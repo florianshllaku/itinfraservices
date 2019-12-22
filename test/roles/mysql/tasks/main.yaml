@@ -41,8 +41,7 @@
     priv: '*.*:ALL'
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock
-  notify:
-    - restart sqld_exporter
+
 
 - name: ensure mysql is configured to bind to wp server
   ini_file:
