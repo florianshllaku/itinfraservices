@@ -3,6 +3,7 @@
   become: yes
   hosts: all
   roles:
+    - rsyslog
     - init
     - bind
 
